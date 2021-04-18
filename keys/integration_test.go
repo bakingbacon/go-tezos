@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/goat-systems/go-tezos/v4/forge"
-	"github.com/goat-systems/go-tezos/v4/internal/testutils"
+	"github.com/goat-systems/go-tezos/v4/testutils"
 	"github.com/goat-systems/go-tezos/v4/rpc"
 )
 

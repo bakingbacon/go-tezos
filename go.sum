@@ -25,6 +25,7 @@ github.com/aristanetworks/goarista v0.0.0-20170210015632-ea17b1a17847/go.mod h1:
 github.com/aws/aws-sdk-go v1.25.48/go.mod h1:KmX6BPdI08NWTb3/sm4ZGu5ShLoqVDhKgpiN924inxo=
 github.com/bakingbacon/go-tezos/v4 v4.0.4 h1:8MIa3jSzLV8JTFkqATqktbGDzgJZslwsKuVq0SbTCNg=
 github.com/bakingbacon/go-tezos/v4 v4.0.4/go.mod h1:R6pBtn/dC3bw1D65Ik17femN2LulEUKQH9W5DKckfJk=
+github.com/bakingbacon/go-tezos/v4 v4.0.5-0.20210418182755-deb31a1cb97d/go.mod h1:d3ImmyT6aGPZpha6XQ8PZlEPORyDbF90eo1HpWjGKGs=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/btcsuite/btcd v0.0.0-20171128150713-2e60448ffcc6/go.mod h1:Dmm/EzmjnCiweXmzRIAiUWCInVmPgjkzgv5k4tVyXiQ=
 github.com/btcsuite/btcd v0.20.1-beta h1:Ik4hyJqN8Jfyv3S4AGBOmyouMsYE3EdYODkMbQjwPGw=

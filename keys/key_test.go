@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"testing"
 
-	tzcrypt "github.com/goat-systems/go-tezos/v4/internal/crypto"
-	"github.com/goat-systems/go-tezos/v4/internal/testutils"
+	tzcrypt "github.com/goat-systems/go-tezos/v4/crypto"
+	"github.com/goat-systems/go-tezos/v4/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
