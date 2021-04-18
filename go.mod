@@ -13,14 +13,8 @@ require (
 	github.com/tyler-smith/go-bip39 v1.0.2
 	github.com/valyala/fastjson v1.5.4
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
-	golang.org/x/lint v0.0.0-20201208152925-83fdc39ff7b5 // indirect
-	golang.org/x/mod v0.4.2 // indirect
-	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
-	golang.org/x/sys v0.0.0-20210415045647-66c3f260301c // indirect
-	golang.org/x/tools v0.1.0 // indirect
-	honnef.co/go/tools v0.1.3 // indirect
 )
 
-replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.5-0.20210418185839-c238c479da49
+replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.5-0.20210418190056-c1b828da2194
 
 replace github.com/goat-systems/go-tezos/v4/internal/crypto => ./crypto
