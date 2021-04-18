@@ -15,6 +15,6 @@ require (
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 )
 
-replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.6
+replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.7
 
 replace github.com/goat-systems/go-tezos/v4/internal/crypto => ./crypto
