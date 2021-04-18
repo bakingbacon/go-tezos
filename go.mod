@@ -21,6 +21,6 @@ require (
 	honnef.co/go/tools v0.1.3 // indirect
 )
 
-replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.4
+replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.5-0.20210418182755-deb31a1cb97d
 
 replace github.com/goat-systems/go-tezos/v4/internal/crypto => ./crypto
