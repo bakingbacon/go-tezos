@@ -7,7 +7,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	tzcrypt "github.com/goat-systems/go-tezos/v4/crypto"
+	tzcrypt "github.com/bakingbacon/go-tezos/v4/crypto"
 	"github.com/pkg/errors"
 	"github.com/tyler-smith/go-bip39"
 	"golang.org/x/crypto/nacl/secretbox"

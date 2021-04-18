@@ -16,5 +16,3 @@ require (
 )
 
 replace github.com/goat-systems/go-tezos/v4 => github.com/bakingbacon/go-tezos/v4 v4.0.7
-
-replace github.com/goat-systems/go-tezos/v4/internal/crypto => ./crypto

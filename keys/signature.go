@@ -4,7 +4,7 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/goat-systems/go-tezos/v4/crypto"
+	"github.com/bakingbacon/go-tezos/v4/crypto"
 )
 
 // Signature represents the signature of an operation
