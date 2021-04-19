@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/goat-systems/go-tezos/v4/rpc"
+	"github.com/bakingbacon/go-tezos/v4/rpc"
 	"github.com/stretchr/testify/assert"
 )
 

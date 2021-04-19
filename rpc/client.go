@@ -25,7 +25,7 @@ type Client struct {
 	client           *resty.Client
 	chain            string
 	networkConstants *Constants
-	host             string
+	Host             string
 }
 
 /*
@@ -64,7 +64,7 @@ New returns a pointer to a Client and initializes the rpc configuration with the
 func New(host string) (*Client, error) {
 	c := &Client{
 		client: resty.New(),
-		host:   cleanseHost(host),
+		Host:   cleanseHost(host),
 		chain:  "main",
 	}
 
@@ -83,7 +83,7 @@ func (c *Client) SetChain(chain string) {
 }
 
 // CurrentContstants returns the constants used on the client
-func (c *Client) CurrentContstants() Constants {
+func (c *Client) CurrentConstants() Constants {
 	return *c.networkConstants
 }
 
@@ -107,7 +107,7 @@ func (c *Client) post(path string, body interface{}, opts ...rpcOptions) (*resty
 		SetQueryParams(queryParams(opts...)).
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(fmt.Sprintf("%s%s", c.host, path))
+		Post(fmt.Sprintf("%s%s", c.Host, path))
 
 	if err != nil {
 		return resp, err
@@ -119,7 +119,7 @@ func (c *Client) post(path string, body interface{}, opts ...rpcOptions) (*resty
 }
 
 func (c *Client) get(path string, opts ...rpcOptions) (*resty.Response, error) {
-	resp, err := c.client.R().SetQueryParams(queryParams(opts...)).Get(fmt.Sprintf("%s%s", c.host, path))
+	resp, err := c.client.R().SetQueryParams(queryParams(opts...)).Get(fmt.Sprintf("%s%s", c.Host, path))
 	if err != nil {
 		return resp, err
 	}

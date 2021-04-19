@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/goat-systems/go-tezos/v4/forge"
-	"github.com/goat-systems/go-tezos/v4/rpc"
+	"github.com/bakingbacon/go-tezos/v4/forge"
+	"github.com/bakingbacon/go-tezos/v4/rpc"
 	"github.com/stretchr/testify/assert"
 )
 

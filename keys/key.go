@@ -162,6 +162,11 @@ func (k *Key) SignBytes(msg []byte) (Signature, error) {
 	return k.curve.sign(checkAndAddWaterMark(msg), k.privKey)
 }
 
+// SignRawBytes will sign a message without checking watermark
+func (k *Key) SignRawBytes(msg []byte) (Signature, error) {
+    return k.curve.sign(msg, k.privKey)
+}
+
 func checkAndAddWaterMark(v []byte) []byte {
 	if v != nil {
 		if v[0] != byte(3) {
