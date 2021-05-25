@@ -33,6 +33,7 @@ var (
 func operationTags(kind string) string {
 	tags := map[string]string{
 		"endorsement":                 "0",
+		"endorsement_with_slot":       "10",
 		"proposals":                   "5",
 		"ballot":                      "6",
 		"seed_nonce_revelation":       "1",
@@ -215,67 +216,73 @@ func Encode(branch string, contents ...rpc.Content) (string, error) {
 		case rpc.ENDORSEMENT:
 			v, err := forgeEndorsement(c.ToEndorsement())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge endorsement")
+			}
+			buf.Write(v)
+		case rpc.ENDORSEMENT_WITH_SLOT:
+			v, err := forgeEndorsementWithSlot(c.ToEndorsementWithSlot())
+			if err != nil {
+				return "", errors.Wrap(err, "failed to forge endorsement with slot")
 			}
 			buf.Write(v)
 		case rpc.PROPOSALS:
 			v, err := forgeProposal(c.ToProposal())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge proposal")
 			}
 			buf.Write(v)
 		case rpc.BALLOT:
 			v, err := forgeBallot(c.ToBallot())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge ballot")
 			}
 			buf.Write(v)
 		case rpc.SEEDNONCEREVELATION:
 			v, err := forgeSeedNonceRevelation(c.ToSeedNonceRevelations())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge seed nonce revelation")
 			}
 			buf.Write(v)
 		case rpc.DOUBLEENDORSEMENTEVIDENCE:
 			v, err := forgeDoubleEndorsementEvidence(c.ToDoubleEndorsementEvidence())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge double endorsement evidence")
 			}
 			buf.Write(v)
 		case rpc.DOUBLEBAKINGEVIDENCE:
 			v, err := forgeDoubleBakingEvidence(c.ToDoubleBakingEvidence())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge double baking evidence")
 			}
 			buf.Write(v)
 		case rpc.ACTIVATEACCOUNT:
 			v, err := forgeAccountActivation(c.ToAccountActivation())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge account activation")
 			}
 			buf.Write(v)
 		case rpc.REVEAL:
 			v, err := forgeReveal(c.ToReveal())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge reveal")
 			}
 			buf.Write(v)
 		case rpc.TRANSACTION:
 			v, err := forgeTransaction(c.ToTransaction())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge transaction")
 			}
 			buf.Write(v)
 		case rpc.ORIGINATION:
 			v, err := forgeOrigination(c.ToOrigination())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge origination")
 			}
 			buf.Write(v)
 		case rpc.DELEGATION:
 			v, err := forgeDelegation(c.ToDelegation())
 			if err != nil {
-				return "", errors.Wrap(err, "failed to forge operation")
+				return "", errors.Wrap(err, "failed to forge delegation")
 			}
 			buf.Write(v)
 		default:
@@ -593,6 +600,54 @@ func forgeEndorsement(e rpc.Endorsement) ([]byte, error) {
 	return result.Bytes(), nil
 }
 
+func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
+	err := validator.New().Struct(e)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "invalid input")
+	}
+
+	result := bytes.NewBuffer([]byte{})
+
+
+	// Add branch
+	branch, err := crypto.Decode(e.Endorsement.Branch)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge operation")
+	}
+	result.Write(bytes.TrimPrefix(branch, branchPrefix))
+
+	// Tag
+	if kind, err := forgeNat(operationTags("endorsement_with_slot")); err == nil {
+		result.Write(kind)
+	} else {
+		return []byte{}, errors.Wrap(err, "failed to forge kind")
+	}
+
+	// Add branch again
+	result.Write(bytes.TrimPrefix(branch, branchPrefix))
+
+	// Endorsement
+	if kind, err := forgeNat(operationTags("endorsement")); err == nil {
+		result.Write(kind)
+	} else {
+		return []byte{}, errors.Wrap(err, "failed to forge kind")
+	}
+
+	result.Write(forgeInt32(e.Endorsement.Operations.Level, 4))
+
+	// Dummy signature
+	signature, err := crypto.Decode(e.Endorsement.Signature)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge signature")
+	}
+	result.Write(bytes.TrimPrefix(signature, sigPrefix))
+
+	// Slot
+	result.Write(forgeInt32(e.Slot, 4))
+
+	return result.Bytes(), nil
+}
+
 func forgeSeedNonceRevelation(s rpc.SeedNonceRevelation) ([]byte, error) {
 	err := validator.New().Struct(s)
 	if err != nil {
@@ -752,7 +807,8 @@ func forgeInlinedEndorsement(i rpc.InlinedEndorsement) ([]byte, error) {
 		return []byte{}, errors.Wrap(err, "failed to forge branch")
 	}
 
-	if kind, err := forgeNat(operationTags(i.Operations.Kind)); err == nil {
+	//if kind, err := forgeNat(operationTags(i.Operations.Kind)); err == nil {
+	if kind, err := forgeNat(operationTags("endorsement")); err == nil {
 		result.Write(kind)
 	} else {
 		return []byte{}, errors.Wrap(err, "failed to forge operations kind")

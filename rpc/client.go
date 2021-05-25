@@ -14,7 +14,7 @@ import (
 const MUTEZ = 1000000
 
 var (
-	regRPCError = regexp.MustCompile(`\s?\{\s?\"(kind|error)\"\s?:\s?\"[^,]+\"\s?,\s?\"(kind|error)"\s?:\s?\"[^}]+\s?\}\s?`)
+	regRPCError = regexp.MustCompile(`\s?\{\s?\"(kind|error)\"\s?:\s?\"[^,]+\"\s?,\s?\"(kind|error|id)"\s?:\s?\"[^}]+\s?\}\s?`)
 )
 
 /*
@@ -34,6 +34,7 @@ Error represents and RPC error
 type Error struct {
 	Kind string `json:"kind"`
 	Err  string `json:"error"`
+	Id   string `json:"id"`
 }
 
 func (r *Error) Error() string {
@@ -104,6 +105,7 @@ func (c *Client) SetConstants(constants Constants) {
 
 func (c *Client) post(path string, body interface{}, opts ...rpcOptions) (*resty.Response, error) {
 	resp, err := c.client.R().
+		EnableTrace().
 		SetQueryParams(queryParams(opts...)).
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).

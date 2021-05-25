@@ -830,6 +830,12 @@ func (c *Client) PreapplyOperations(input PreapplyOperationsInput) (*resty.Respo
 		return nil, nil, errors.Wrap(err, "failed to preapply operations: invalid input")
 	}
 
+	v, err := json.Marshal(input.Operations)
+	if err != nil {
+		return nil, nil, errors.Wrap(err, "failed to marshal")
+	}
+	fmt.Println("==== MARSHAL:", string(v))
+
 	resp, err := c.post(fmt.Sprintf("/chains/%s/blocks/%s/helpers/preapply/operations", c.chain, input.BlockID.ID()), input.Operations)
 	if err != nil {
 		return resp, nil, errors.Wrap(err, "failed to preapply operations")

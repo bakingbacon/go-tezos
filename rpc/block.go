@@ -16,12 +16,14 @@ type Kind string
 const (
 	// ENDORSEMENT kind
 	ENDORSEMENT Kind = "endorsement"
+	// ENDORSEMENT WITH SLOT kind
+	ENDORSEMENT_WITH_SLOT Kind = "endorsement_with_slot"
 	// SEEDNONCEREVELATION kind
 	SEEDNONCEREVELATION Kind = "seed_nonce_revelation"
 	// DOUBLEENDORSEMENTEVIDENCE kind
 	DOUBLEENDORSEMENTEVIDENCE Kind = "double_endorsement_evidence"
 	// DOUBLEBAKINGEVIDENCE kind
-	DOUBLEBAKINGEVIDENCE Kind = "Double_baking_evidence"
+	DOUBLEBAKINGEVIDENCE Kind = "double_baking_evidence"
 	// ACTIVATEACCOUNT kind
 	ACTIVATEACCOUNT Kind = "activate_account"
 	// PROPOSALS kind
@@ -252,7 +254,7 @@ RPC:
 	https://tezos.gitlab.io/008/rpc.html#get-block-id
 */
 type OrganizedContents struct {
-	Endorsements              []Endorsement
+	Endorsements              []EndorsementWithSlot
 	SeedNonceRevelations      []SeedNonceRevelation
 	DoubleEndorsementEvidence []DoubleEndorsementEvidence
 	DoubleBakingEvidence      []DoubleBakingEvidence
@@ -327,6 +329,8 @@ type Content struct {
 	Kind          Kind                `json:"kind,omitempty"`
 	Level         int                 `json:"level,omitempty"`
 	Nonce         string              `json:"nonce,omitempty"`
+	Endorsement   *InlinedEndorsement `json:"endorsement,omitempty"`
+	Slot          int                 `json:"slot,omitempty"`
 	Op1           *InlinedEndorsement `json:"Op1,omitempty"`
 	Op2           *InlinedEndorsement `json:"Op2,omitempty"`
 	Pkh           string              `json:"pkh,omitempty"`
@@ -357,6 +361,8 @@ type Content struct {
 func (c *Content) MarshalJSON() ([]byte, error) {
 	if c.Kind == ENDORSEMENT {
 		return json.Marshal(c.ToEndorsement())
+	} else if c.Kind == ENDORSEMENT_WITH_SLOT {
+		return json.Marshal(c.ToEndorsementWithSlot())
 	} else if c.Kind == SEEDNONCEREVELATION {
 		return json.Marshal(c.ToSeedNonceRevelations())
 	} else if c.Kind == DOUBLEENDORSEMENTEVIDENCE {
@@ -386,8 +392,8 @@ func (c *Content) MarshalJSON() ([]byte, error) {
 func (c Contents) Organize() OrganizedContents {
 	var organizeContents OrganizedContents
 	for _, content := range c {
-		if content.Kind == ENDORSEMENT {
-			organizeContents.Endorsements = append(organizeContents.Endorsements, content.ToEndorsement())
+		if content.Kind == ENDORSEMENT_WITH_SLOT {
+			organizeContents.Endorsements = append(organizeContents.Endorsements, content.ToEndorsementWithSlot())
 		} else if content.Kind == SEEDNONCEREVELATION {
 			organizeContents.SeedNonceRevelations = append(organizeContents.SeedNonceRevelations, content.ToSeedNonceRevelations())
 		} else if content.Kind == DOUBLEENDORSEMENTEVIDENCE {
@@ -818,6 +824,59 @@ func (e *Endorsement) ToContent() Content {
 }
 
 /*
+EndorsementWithSlot represents a Florence 009 endorsement in the tezos block schema
+
+Docs:
+	http://doc.tzalpha.net/protocols/009_florence.html#endorsements-now-checked-in-linear-time-attention-indexers
+*/
+type EndorsementWithSlot struct {
+	Kind         Kind                 `json:"kind"`
+	Endorsement  *InlinedEndorsement  `json:"endorsement"`
+	Slot         int                  `json:"slot"`
+	Metadata     *EndorsementMetadata `json:"metadata,omitempty"`
+}
+
+// ToContent converts EndorsementWithSlot to Content
+func (e *EndorsementWithSlot) ToContent() Content {
+	var metadata *ContentsMetadata
+
+	if e.Metadata != nil {
+		metadata = &ContentsMetadata{
+			BalanceUpdates: e.Metadata.BalanceUpdates,
+			Delegate:       e.Metadata.Delegate,
+			Slots:          e.Metadata.Slots,
+		}
+	}
+
+	return Content{
+		Kind:        e.Kind,
+		Endorsement: e.Endorsement,
+		Slot:        e.Slot,
+		Metadata:    metadata,
+	}
+}
+
+// ToEndorsement converts Content to EndorsementWithSlot.
+func (c *Content) ToEndorsementWithSlot() EndorsementWithSlot {
+	var metadata *EndorsementMetadata
+
+	if c.Metadata != nil {
+		metadata = &EndorsementMetadata{
+			BalanceUpdates: c.Metadata.BalanceUpdates,
+			Delegate:       c.Metadata.Delegate,
+			Slots:          c.Metadata.Slots,
+		}
+	}
+
+	return EndorsementWithSlot{
+		Kind:        c.Kind,
+		Endorsement: c.Endorsement,
+		Slot:        c.Slot,
+		Metadata:    metadata,
+	}
+}
+
+/*
 SeedNonceRevelation represents an Seed_nonce_revelation in the $operation.alpha.operation_contents_and_result in the tezos block schema
 
 RPC:
@@ -900,7 +959,7 @@ RPC:
 	https://tezos.gitlab.io/008/rpc.html#get-block-id
 */
 type InlinedEndorsementOperations struct {
-	Kind  string `json:"kind"`
+	Kind  Kind   `json:"kind"`
 	Level int    `json:"level"`
 }
 
