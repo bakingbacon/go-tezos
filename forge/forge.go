@@ -608,13 +608,13 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 
 	result := bytes.NewBuffer([]byte{})
 
-
 	// Add branch
 	branch, err := crypto.Decode(e.Endorsement.Branch)
 	if err != nil {
 		return []byte{}, errors.Wrap(err, "failed to forge operation")
 	}
-	result.Write(bytes.TrimPrefix(branch, branchPrefix))
+	branchNoPrefix := bytes.TrimPrefix(branch, branchPrefix)
+	result.Write(branchNoPrefix)
 
 	// Tag
 	if kind, err := forgeNat(operationTags("endorsement_with_slot")); err == nil {
@@ -623,27 +623,30 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 		return []byte{}, errors.Wrap(err, "failed to forge kind")
 	}
 
-	// Add branch again
-	result.Write(bytes.TrimPrefix(branch, branchPrefix))
+	// Inlined Endorsement
+	endorsement := bytes.NewBuffer([]byte{})
 
-	// Endorsement
-	if kind, err := forgeNat(operationTags("endorsement")); err == nil {
-		result.Write(kind)
-	} else {
-		return []byte{}, errors.Wrap(err, "failed to forge kind")
-	}
+	endorsement.Write(branchNoPrefix)
+	endoTag, _ := forgeNat(operationTags("endorsement"))
+	endorsement.Write(endoTag)
+	endorsement.Write(forgeInt32(i.Operations.Level, 4))
 
-	result.Write(forgeInt32(e.Endorsement.Operations.Level, 4))
-
-	// Dummy signature
 	signature, err := crypto.Decode(e.Endorsement.Signature)
 	if err != nil {
 		return []byte{}, errors.Wrap(err, "failed to forge signature")
 	}
-	result.Write(bytes.TrimPrefix(signature, sigPrefix))
+	sigNoPrefix := bytes.TrimPrefix(signature, sigPrefix)
+	endorsement.Write(sigNoPrefix)
+
+	// Write inline endorsement with length
+	result.Write(forgeArray(endorsement.Bytes(), 4))
 
 	// Slot
 	result.Write(forgeInt32(e.Slot, 4))
+
+	// Dummy signature
+	zeroSig := make([]byte, 64)
+	result.Write(zeroSig)
 
 	return result.Bytes(), nil
 }
@@ -681,7 +684,7 @@ func forgeProposal(p rpc.Proposal) ([]byte, error) {
 
 	result := bytes.NewBuffer([]byte{})
 
-	if kind, err := forgeNat(operationTags("proposal")); err == nil {
+	if kind, err := forgeNat(operationTags("proposals")); err == nil {
 		result.Write(kind)
 	} else {
 		return []byte{}, errors.Wrap(err, "failed to forge kind")
