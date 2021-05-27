@@ -629,7 +629,7 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 	endorsement.Write(branchNoPrefix)
 	endoTag, _ := forgeNat(operationTags("endorsement"))
 	endorsement.Write(endoTag)
-	endorsement.Write(forgeInt32(i.Operations.Level, 4))
+	endorsement.Write(forgeInt32(e.Endorsement.Operations.Level, 4))
 
 	signature, err := crypto.Decode(e.Endorsement.Signature)
 	if err != nil {
