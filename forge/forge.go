@@ -24,7 +24,8 @@ import (
 var (
 	branchPrefix           []byte = []byte{1, 52}
 	proposalPrefix         []byte = []byte{2, 170}
-	sigPrefix              []byte = []byte{4, 130, 43}
+	genericSigPrefix       []byte = []byte{4, 130, 43}
+	edSigPrefix            []byte = []byte{9, 245, 205, 134, 18}
 	operationPrefix        []byte = []byte{29, 159, 109}
 	contextPrefix          []byte = []byte{79, 179}
 	scriptExpressionPrefix []byte = []byte{13, 44, 64, 27}
@@ -608,14 +609,6 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 
 	result := bytes.NewBuffer([]byte{})
 
-	// Add branch
-	branch, err := crypto.Decode(e.Endorsement.Branch)
-	if err != nil {
-		return []byte{}, errors.Wrap(err, "failed to forge operation")
-	}
-	branchNoPrefix := bytes.TrimPrefix(branch, branchPrefix)
-	result.Write(branchNoPrefix)
-
 	// Tag
 	if kind, err := forgeNat(operationTags("endorsement_with_slot")); err == nil {
 		result.Write(kind)
@@ -626,6 +619,13 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 	// Inlined Endorsement
 	endorsement := bytes.NewBuffer([]byte{})
 
+	// Inlined Endorsement - Add branch
+	branch, err := crypto.Decode(e.Endorsement.Branch)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge operation")
+	}
+	branchNoPrefix := bytes.TrimPrefix(branch, branchPrefix)
+
 	endorsement.Write(branchNoPrefix)
 	endoTag, _ := forgeNat(operationTags("endorsement"))
 	endorsement.Write(endoTag)
@@ -635,14 +635,14 @@ func forgeEndorsementWithSlot(e rpc.EndorsementWithSlot) ([]byte, error) {
 	if err != nil {
 		return []byte{}, errors.Wrap(err, "failed to forge signature")
 	}
-	sigNoPrefix := bytes.TrimPrefix(signature, sigPrefix)
+	sigNoPrefix := bytes.TrimPrefix(signature, edSigPrefix)
 	endorsement.Write(sigNoPrefix)
 
 	// Write inline endorsement with length
 	result.Write(forgeArray(endorsement.Bytes(), 4))
 
 	// Slot
-	result.Write(forgeInt32(e.Slot, 4))
+	result.Write(forgeInt16(e.Slot))
 
 	// Dummy signature
 	zeroSig := make([]byte, 64)
@@ -819,7 +819,7 @@ func forgeInlinedEndorsement(i rpc.InlinedEndorsement) ([]byte, error) {
 
 	result.Write(forgeInt32(i.Operations.Level, 4))
 
-	if signature, err := prefixAndBase58Encode(i.Signature, sigPrefix); err == nil {
+	if signature, err := prefixAndBase58Encode(i.Signature, genericSigPrefix); err == nil {
 		result.Write([]byte(signature))
 	} else {
 		return []byte{}, errors.Wrap(err, "failed to forge signature")
@@ -884,7 +884,7 @@ func forgeBlockHeader(b rpc.BlockHeader) ([]byte, error) {
 
 func forgeSignature(value string) ([]byte, error) {
 	var buf []byte
-	if signature, err := prefixAndBase58Encode(value, sigPrefix); err == nil {
+	if signature, err := prefixAndBase58Encode(value, genericSigPrefix); err == nil {
 		buf = []byte(signature)
 	} else {
 		return []byte{}, errors.Wrap(err, "failed to forge context")
@@ -894,8 +894,14 @@ func forgeSignature(value string) ([]byte, error) {
 }
 
 func forgeInt32(value int, l int) []byte {
-	bigE := make([]byte, 4)
+	bigE := make([]byte, l)
 	binary.BigEndian.PutUint32(bigE, uint32(value))
+	return bigE
+}
+
+func forgeInt16(value int) []byte {
+	bigE := make([]byte, 2)
+	binary.BigEndian.PutUint16(bigE, uint16(value))
 	return bigE
 }
 

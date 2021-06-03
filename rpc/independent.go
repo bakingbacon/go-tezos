@@ -149,10 +149,10 @@ Path:
 RPC:
 	https://tezos.gitlab.io/shell/rpc.html#post-injection-block
 */
-func (c *Client) InjectionBlock(input InjectionBlockInput) (*resty.Response, error) {
+func (c *Client) InjectionBlock(input InjectionBlockInput) (*resty.Response, string, error) {
 	err := validator.New().Struct(input)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to inject block: invalid input")
+		return nil, "", errors.Wrap(err, "failed to inject block: invalid input")
 	}
 
 	// Create an anonymous struct containing the data required by RPC
@@ -166,16 +166,20 @@ func (c *Client) InjectionBlock(input InjectionBlockInput) (*resty.Response, err
 
 	v, err := json.Marshal(newBlock)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to marshal new block")
+		return nil, "", errors.Wrap(err, "failed to marshal new block")
 	}
-
 	resp, err := c.post("/injection/block", v, input.contructRPCOptions()...)
-
 	if err != nil {
-		return resp, errors.Wrap(err, "failed to inject block")
+		return resp, "", errors.Wrap(err, "failed to inject block")
 	}
 
-	return resp, nil
+	var opstring string
+	err = json.Unmarshal(resp.Body(), &opstring)
+	if err != nil {
+		return resp, "", errors.Wrap(err, "failed to parse block injection response")
+	}
+
+	return resp, opstring, nil
 }
 
 /*

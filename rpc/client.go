@@ -69,6 +69,11 @@ func New(host string) (*Client, error) {
 		chain:  "main",
 	}
 
+	// Custom header
+	c.client.SetHeaders(map[string]string{
+		"User-Agent": "BakinBacon/1.0.1",
+	})
+
 	_, constants, err := c.Constants(ConstantsInput{BlockID: &BlockIDHead{}})
 	if err != nil {
 		return c, errors.Wrap(err, "failed to initialize library with network constants")

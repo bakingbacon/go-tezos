@@ -834,7 +834,7 @@ func (c *Client) PreapplyOperations(input PreapplyOperationsInput) (*resty.Respo
 	if err != nil {
 		return nil, nil, errors.Wrap(err, "failed to marshal")
 	}
-	fmt.Println("==== MARSHAL:", string(v))
+	fmt.Println(string(v))
 
 	resp, err := c.post(fmt.Sprintf("/chains/%s/blocks/%s/helpers/preapply/operations", c.chain, input.BlockID.ID()), input.Operations)
 	if err != nil {
