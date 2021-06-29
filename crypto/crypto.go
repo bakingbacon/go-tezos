@@ -21,9 +21,12 @@ func B58cencode(payload []byte, prefix []byte) string {
 }
 
 // B58cdecode -
-func B58cdecode(payload string, prefix []byte) []byte {
-	b58c, _ := Decode(payload)
-	return b58c[len(prefix):]
+func B58cdecode(payload string, prefix []byte) ([]byte, error) {
+	b58c, err := Decode(payload)
+	if err != nil {
+		return []byte{}, err
+	}
+	return b58c[len(prefix):], nil
 }
 
 // Encode -

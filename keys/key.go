@@ -68,7 +68,17 @@ func FromBase58(privKey string, kind ECKind) (*Key, error) {
 		return nil, errors.Wrap(err, "failed to import key")
 	}
 
-	return key(tzcrypt.B58cdecode(privKey, curve.privateKeyPrefix()), curve.getECKind())
+	decodedPrivKey, err := tzcrypt.B58cdecode(privKey, curve.privateKeyPrefix())
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to import key")
+	}
+
+	importedPrivKey, err := key(decodedPrivKey, curve.getECKind())
+	if err != nil {
+		return nil, err
+	}
+
+	return importedPrivKey, nil
 }
 
 // FromEncryptedSecret returns a new key from an encrypted private key
@@ -124,7 +134,7 @@ func key(v []byte, kind ECKind) (*Key, error) {
 	curve := getCurve(kind)
 	pubKey, err := newPubKey(curve.getPrivateKey(v), kind)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to import key")
+		return nil, errors.Wrap(err, "failed to import pub key")
 	}
 
 	return &Key{

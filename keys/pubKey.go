@@ -15,22 +15,22 @@ type PubKey struct {
 
 func newPubKey(v []byte, kind ECKind) (PubKey, error) {
 	if len(v) < 32 {
-		return PubKey{}, errors.New("failed to import pub key")
+		return PubKey{}, errors.New("pub key invalid: length too short")
 	}
 
 	curve := getCurve(kind)
 	pk, err := curve.getPublicKey(v)
 	if err != nil {
-		return PubKey{}, errors.Wrap(err, "failed to import pub key")
+		return PubKey{}, errors.Wrap(err, "failed to get public key from private")
 	}
 
 	hash, err := blake2b.New(20, []byte{})
 	if err != nil {
-		return PubKey{}, errors.Wrapf(err, "failed to import pub key: failed to generate public hash from public key %s", string(pk))
+		return PubKey{}, errors.Wrap(err, "failed to allocate Blake2b structure for import")
 	}
 	_, err = hash.Write(pk)
 	if err != nil {
-		return PubKey{}, errors.Wrapf(err, "failed to import pub key: failed to generate public hash from public key %s", string(pk))
+		return PubKey{}, errors.Wrapf(err, "failed to generate public hash from public key %s", string(pk))
 	}
 
 	return PubKey{
