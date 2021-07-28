@@ -698,16 +698,20 @@ func forgeProposal(p rpc.Proposal) ([]byte, error) {
 
 	result.Write(forgeInt32(p.Period, 4))
 
-	buf := bytes.NewBuffer([]byte{})
+	proposalsBuf := bytes.NewBuffer([]byte{})
 	for _, proposal := range p.Proposals {
-		if p, err := prefixAndBase58Encode(proposal, proposalPrefix); err == nil {
-			buf.Write([]byte(p))
-		} else {
-			return []byte{}, errors.Wrap(err, "failed to forge proposals")
+
+		// Decode proposal and strip prefix
+		decodedProposal, err := crypto.Decode(proposal)
+		if err != nil {
+			return []byte{}, errors.Wrap(err, "failed to decode proposal")
 		}
+		proposalNoPrefix := bytes.TrimPrefix(decodedProposal, proposalPrefix)
+
+		proposalsBuf.Write([]byte(proposalNoPrefix))
 	}
 
-	result.Write(forgeArray(buf.Bytes(), 4))
+	result.Write(forgeArray(proposalsBuf.Bytes(), 4))
 	return result.Bytes(), nil
 }
 

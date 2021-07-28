@@ -105,8 +105,8 @@ type Metadata struct {
 	MaxBlockHeaderLength   int                      `json:"max_block_header_length"`
 	MaxOperationListLength []MaxOperationListLength `json:"max_operation_list_length"`
 	Baker                  string                   `json:"baker"`
-	Level                  Level                    `json:"level"`
-	VotingPeriodKind       string                   `json:"voting_period_kind"`
+	Level                  Level                    `json:"level_info"`
+	VotingPeriodInfo       VotingPeriod             `json:"voting_period_info"`
 	NonceHash              interface{}              `json:"nonce_hash"`
 	ConsumedGas            string                   `json:"consumed_gas"`
 	Deactivated            []string                 `json:"deactivated"`
@@ -142,15 +142,13 @@ type MaxOperationListLength struct {
 Level represents the level in a Tezos block
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id
+	https://tezos.gitlab.io/010/rpc.html#get-block-id
 */
 type Level struct {
 	Level                int  `json:"level"`
 	LevelPosition        int  `json:"level_position"`
 	Cycle                int  `json:"cycle"`
 	CyclePosition        int  `json:"cycle_position"`
-	VotingPeriod         int  `json:"voting_period"`
-	VotingPeriodPosition int  `json:"voting_period_position"`
 	ExpectedCommitment   bool `json:"expected_commitment"`
 }
 
