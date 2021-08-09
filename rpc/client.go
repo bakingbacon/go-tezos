@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/pkg/errors"
@@ -74,6 +75,10 @@ func New(host string) (*Client, error) {
 		"User-Agent": "BakinBacon/1.0.1",
 	})
 
+	// Timeout
+	c.client.SetTimeout(30 * time.Second)
+
+	// Load the network constants
 	_, constants, err := c.Constants(ConstantsInput{BlockID: &BlockIDHead{}})
 	if err != nil {
 		return c, errors.Wrap(err, "failed to initialize library with network constants")

@@ -76,18 +76,18 @@ RPC:
 	https://tezos.gitlab.io/008/rpc.html#get-block-id
 */
 type Header struct {
-	Level            int       `json:"level"`
-	Proto            int       `json:"proto"`
-	Predecessor      string    `json:"Predecessor"`
-	Timestamp        time.Time `json:"timestamp"`
-	ValidationPass   int       `json:"validation_pass"`
-	OperationsHash   string    `json:"operations_hash"`
-	Fitness          []string  `json:"fitness"`
-	Context          string    `json:"context"`
-	Priority         int       `json:"priority"`
-	ProofOfWorkNonce string    `json:"proof_of_work_nonce"`
-	SeedNonceHash    string    `json:"seed_nonce_hash"`
-	Signature        string    `json:"signature"`
+	Level               int       `json:"level"`
+	Proto               int       `json:"proto"`
+	Predecessor         string    `json:"Predecessor"`
+	Timestamp           time.Time `json:"timestamp"`
+	ValidationPass      int       `json:"validation_pass"`
+	OperationsHash      string    `json:"operations_hash"`
+	Fitness             []string  `json:"fitness"`
+	Context             string    `json:"context"`
+	Priority            int       `json:"priority"`
+	ProofOfWorkNonce    string    `json:"proof_of_work_nonce"`
+	SeedNonceHash       string    `json:"seed_nonce_hash"`
+	Signature           string    `json:"signature"`
 }
 
 /*
@@ -1021,18 +1021,19 @@ RPC:
 	https://tezos.gitlab.io/008/rpc.html#get-block-id
 */
 type BlockHeader struct {
-	Level            int       `json:"level"`
-	Proto            int       `json:"proto"`
-	Predecessor      string    `json:"predecessor"`
-	Timestamp        time.Time `json:"timestamp"`
-	ValidationPass   int       `json:"validation_pass"`
-	OperationsHash   string    `json:"operations_hash"`
-	Fitness          []string  `json:"fitness"`
-	Context          string    `json:"context"`
-	Priority         int       `json:"priority"`
-	ProofOfWorkNonce string    `json:"proof_of_work_nonce"`
-	SeedNonceHash    string    `json:"seed_nonce_hash"`
-	Signature        string    `json:"signature"`
+	Level               int       `json:"level"`
+	Proto               int       `json:"proto"`
+	Predecessor         string    `json:"predecessor"`
+	Timestamp           time.Time `json:"timestamp"`
+	ValidationPass      int       `json:"validation_pass"`
+	OperationsHash      string    `json:"operations_hash"`
+	Fitness             []string  `json:"fitness"`
+	Context             string    `json:"context"`
+	Priority            int       `json:"priority"`
+	ProofOfWorkNonce    string    `json:"proof_of_work_nonce"`
+	SeedNonceHash       string    `json:"seed_nonce_hash"`
+	LiquidityEscapeVote bool      `json:"liquidity_baking_escape_vote"`
+	Signature           string    `json:"signature"`
 }
 
 // ToContent converts a DoubleBakingEvidence to Content

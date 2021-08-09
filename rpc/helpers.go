@@ -21,7 +21,7 @@ Path:
 	../<block_id>/helpers/baking_rights?(level=<block_level>)*&(cycle=<block_cycle>)*&(delegate=<pkh>)*&[max_priority=<int>]&[all]
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-baking-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-baking-rights
 */
 type BakingRights struct {
 	Level         int       `json:"level"`
@@ -34,7 +34,7 @@ type BakingRights struct {
 BakingRightsInput is the input for the BakingRights function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-baking-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-baking-rights
 */
 type BakingRightsInput struct {
 	// The hash of block (height) of which you want to make the query.
@@ -106,7 +106,7 @@ Path:
 	../<block_id>/helpers/baking_rights?(level=<block_level>)*&(cycle=<block_cycle>)*&(delegate=<pkh>)*&[max_priority=<int>]&[all] (GET)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-baking-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-baking-rights
 */
 func (c *Client) BakingRights(input BakingRightsInput) (*resty.Response, []BakingRights, error) {
 	err := validator.New().Struct(input)
@@ -132,7 +132,7 @@ func (c *Client) BakingRights(input BakingRightsInput) (*resty.Response, []Bakin
 CompletePrefixInput is the input for the Prefix function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-complete-prefix
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-complete-prefix
 */
 type CompletePrefixInput struct {
 	// The hash of block (height) of which you want to make the query.
@@ -148,7 +148,7 @@ This RPC is actually able to complete hashes of block, operations, public_keys a
 Path:
 	../<block_id>/helpers/complete/<prefix>
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-complete-prefix
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-complete-prefix
 */
 func (c *Client) CompletePrefix(input CompletePrefixInput) (*resty.Response, []string, error) {
 	err := validator.New().Struct(input)
@@ -174,7 +174,7 @@ func (c *Client) CompletePrefix(input CompletePrefixInput) (*resty.Response, []s
 CurrentLevelInput is the input to the CurrentLevel function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-current-level
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-current-level
 */
 type CurrentLevelInput struct {
 	// The hash of block (height) of which you want to make the query.
@@ -204,7 +204,7 @@ Path:
 	../<block_id>/helpers/current_level?[offset=<int32>]
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-current-level
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-current-level
 */
 type CurrentLevel struct {
 	Level                int  `json:"level"`
@@ -224,7 +224,7 @@ if `offset` is 1.
 Path:
 	../<block_id>/helpers/current_level?[offset=<int32>]
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-current-level
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-current-level
 */
 func (c *Client) CurrentLevel(input CurrentLevelInput) (*resty.Response, CurrentLevel, error) {
 	err := validator.New().Struct(input)
@@ -250,7 +250,7 @@ func (c *Client) CurrentLevel(input CurrentLevelInput) (*resty.Response, Current
 EndorsingRightsInput is the input for the EndorsingRights function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-endorsing-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-endorsing-rights
 */
 type EndorsingRightsInput struct {
 	// The block (height) of which you want to make the query.
@@ -270,7 +270,7 @@ Path:
 	../<block_id>/helpers/endorsing_rights?(level=<block_level>)*&(cycle=<block_cycle>)*&(delegate=<pkh>)* (GET)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-endorsing-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-endorsing-rights
 */
 type EndorsingRights struct {
 	Level         int       `json:"level"`
@@ -294,7 +294,7 @@ Path:
 	../<block_id>/helpers/endorsing_rights?(level=<block_level>)*&(cycle=<block_cycle>)*&(delegate=<pkh>)* (GET)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-endorsing-rights
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-endorsing-rights
 */
 func (c *Client) EndorsingRights(input EndorsingRightsInput) (*resty.Response, []EndorsingRights, error) {
 	err := validator.New().Struct(input)
@@ -346,7 +346,7 @@ func (b *EndorsingRightsInput) contructRPCOptions() []rpcOptions {
 ForgeOperationsInput is the input for the function ForgeOperation
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-operations
 
 */
 type ForgeOperationsInput struct {
@@ -368,7 +368,7 @@ Path:
 	../<block_id>/helpers/forge/operations (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-operations
 
 */
 func (c *Client) ForgeOperations(input ForgeOperationsInput) (*resty.Response, string, error) {
@@ -441,7 +441,7 @@ func (c *Client) ForgeOperations(input ForgeOperationsInput) (*resty.Response, s
 ForgeBlockHeaderInput is the input for the function ForgeBlockHeader
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-block-header
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-block-header
 
 */
 type ForgeBlockHeaderInput struct {
@@ -455,7 +455,7 @@ type ForgeBlockHeaderInput struct {
 ForgeBlockHeaderBody is the block header to forge
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-block-header
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-block-header
 
 */
 type ForgeBlockHeaderBody struct {
@@ -474,7 +474,7 @@ type ForgeBlockHeaderBody struct {
 ForgeBlockHeader is the block header received from forging
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-block-header
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-block-header
 */
 type ForgeBlockHeader struct {
 	Block string `json:"block"`
@@ -487,7 +487,7 @@ Path:
 	../<block_id>/helpers/forge_block_header (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-forge-block-header
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-forge-block-header
 */
 func (c *Client) ForgeBlockHeader(input ForgeBlockHeaderInput) (*resty.Response, ForgeBlockHeader, error) {
 	err := validator.New().Struct(input)
@@ -513,7 +513,7 @@ func (c *Client) ForgeBlockHeader(input ForgeBlockHeaderInput) (*resty.Response,
 LevelsInCurrentCycleInput is the input for the LevelsInCurrentCycle function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-levels-in-current-cycle
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-levels-in-current-cycle
 */
 type LevelsInCurrentCycleInput struct {
 	// The block (height) of which you want to make the query.
@@ -525,7 +525,7 @@ type LevelsInCurrentCycleInput struct {
 LevelsInCurrentCycle is the levels of a cycle
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-levels-in-current-cycle
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-levels-in-current-cycle
 */
 type LevelsInCurrentCycle struct {
 	First int `json:"first"`
@@ -539,7 +539,7 @@ Path:
 	../<block_id>/helpers/levels_in_current_cycle?[offset=<int32>] (GET)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#get-block-id-helpers-levels-in-current-cycle
+	https://tezos.gitlab.io/010/rpc.html#get-block-id-helpers-levels-in-current-cycle
 */
 func (c *Client) LevelsInCurrentCycle(input LevelsInCurrentCycleInput) (*resty.Response, LevelsInCurrentCycle, error) {
 	err := validator.New().Struct(input)
@@ -565,7 +565,7 @@ func (c *Client) LevelsInCurrentCycle(input LevelsInCurrentCycleInput) (*resty.R
 ParseBlockInput is the input for the function ParseBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-block
 */
 type ParseBlockInput struct {
 	// The block (height) of which you want to make the query.
@@ -578,7 +578,7 @@ type ParseBlockInput struct {
 BlockHeaderSignedContents is signed header contents returend from parsing a block
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-block
 */
 type BlockHeaderSignedContents struct {
 	Priority         int    `json:"priority"`
@@ -593,7 +593,7 @@ ParseBlock is signed header contents returend from parsing a block
 Path:
 	../<block_id>/helpers/parse/block (POST)
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-block
 */
 func (c *Client) ParseBlock(input ParseBlockInput) (*resty.Response, BlockHeaderSignedContents, error) {
 	err := validator.New().Struct(input)
@@ -619,7 +619,7 @@ func (c *Client) ParseBlock(input ParseBlockInput) (*resty.Response, BlockHeader
 ParseOperationsInput is the input for the ParseOperations function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-operations
 */
 type ParseOperationsInput struct {
 	// The block (height) of which you want to make the query.
@@ -634,7 +634,7 @@ type ParseOperationsInput struct {
 ParseOperationsBody is the operations you wish to parse
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-operations
 */
 type ParseOperationsBody struct {
 	Branch string `json:"branch"`
@@ -647,7 +647,7 @@ ParseOperations parses encoded operations to a slice of Operations
 Path:
 	../<block_id>/helpers/parse/operations
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-parse-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-parse-operations
 */
 func (c *Client) ParseOperations(input ParseOperationsInput) (*resty.Response, []Operations, error) {
 	err := validator.New().Struct(input)
@@ -681,7 +681,7 @@ func (c *Client) ParseOperations(input ParseOperationsInput) (*resty.Response, [
 PreapplyBlockInput is the input for the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreapplyBlockInput struct {
 	// The block (height) of which you want to make the query.
@@ -715,7 +715,7 @@ func (p *PreapplyBlockInput) constructRPCOptions() []rpcOptions {
 PreapplyBlockBody is the block to preapply in the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreapplyBlockBody struct {
 	ProtocolData PreapplyBlockProtocolData `json:"protocol_data"`
@@ -726,21 +726,22 @@ type PreapplyBlockBody struct {
 PreapplyBlockProtocolData is the protocol data of the block to preapply in the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreapplyBlockProtocolData struct {
-	Protocol         string `json:"protocol"`
-	Priority         int    `json:"priority"`
-	ProofOfWorkNonce string `json:"proof_of_work_nonce"`
-	SeedNonceHash    string `json:"seed_nonce_hash,omitempty"`
-	Signature        string `json:"signature"`
+	Protocol            string `json:"protocol"`
+	Priority            int    `json:"priority"`
+	ProofOfWorkNonce    string `json:"proof_of_work_nonce"`
+	SeedNonceHash       string `json:"seed_nonce_hash,omitempty"`
+	LiquidityEscapeVote bool   `json:"liquidity_baking_escape_vote"`
+	Signature           string `json:"signature"`
 }
 
 /*
 PreappliedBlock is the preapplied block returned by the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreappliedBlock struct {
 	ShellHeader HeaderShell                 `json:"shell_header"`
@@ -751,7 +752,7 @@ type PreappliedBlock struct {
 PreappliedBlockOperations is the preapplied block operations returned by the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreappliedBlockOperations struct {
 	Applied       []PreappliedBlockOperationsStatus `json:"applied"`
@@ -764,7 +765,7 @@ type PreappliedBlockOperations struct {
 PreappliedBlockOperationsStatus is the preapplied block operation status returned by the PreapplyBlock function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 type PreappliedBlockOperationsStatus struct {
 	Hash   string      `json:"hash"`
@@ -780,7 +781,7 @@ the given operations and return the resulting fitness and context hash.
 Path:
 	../<block_id>/helpers/preapply/block?[sort]&[timestamp=<date>]
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-block
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-block
 */
 func (c *Client) PreapplyBlock(input PreapplyBlockInput) (*resty.Response, PreappliedBlock, error) {
 	err := validator.New().Struct(input)
@@ -806,7 +807,7 @@ func (c *Client) PreapplyBlock(input PreapplyBlockInput) (*resty.Response, Preap
 PreapplyOperationsInput is the input for the PreapplyOperations function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-operations
 */
 type PreapplyOperationsInput struct {
 	// The block (height) of which you want to make the query.
@@ -822,7 +823,7 @@ Path:
 	../<block_id>/helpers/preapply/operations (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-preapply-operations
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-preapply-operations
 */
 func (c *Client) PreapplyOperations(input PreapplyOperationsInput) (*resty.Response, []Operations, error) {
 	err := validator.New().Struct(input)
@@ -854,7 +855,7 @@ func (c *Client) PreapplyOperations(input PreapplyOperationsInput) (*resty.Respo
 EntrypointInput is the input for the Entrypoint function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoint
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoint
 */
 type EntrypointInput struct {
 	// The block (height) of which you want to make the query.
@@ -867,7 +868,7 @@ type EntrypointInput struct {
 EntrypointBody is the entrypoint body for the Entrypoint function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoint
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoint
 */
 type EntrypointBody struct {
 	Script     *json.RawMessage `json:"script"`
@@ -878,7 +879,7 @@ type EntrypointBody struct {
 Entrypoint is the return value for the Entrypoint function and contains the entrypoint type
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoint
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoint
 */
 type Entrypoint struct {
 	EntrypointType *json.RawMessage `json:"entrypoint_type"`
@@ -891,7 +892,7 @@ Path:
 	../<block_id>/helpers/scripts/entrypoint (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoint
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoint
 */
 func (c *Client) Entrypoint(input EntrypointInput) (*resty.Response, Entrypoint, error) {
 	err := validator.New().Struct(input)
@@ -917,7 +918,7 @@ func (c *Client) Entrypoint(input EntrypointInput) (*resty.Response, Entrypoint,
 EntrypointsInput is the input for the Entrypoints function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoints
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoints
 */
 type EntrypointsInput struct {
 	// The block (height) of which you want to make the query.
@@ -930,7 +931,7 @@ type EntrypointsInput struct {
 EntrypointsBody is the entrypoints body for the Entrypoints function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoints
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoints
 */
 type EntrypointsBody struct {
 	Script *json.RawMessage `json:"script"`
@@ -940,7 +941,7 @@ type EntrypointsBody struct {
 Entrypoints is the return value for the Entrypoints function and contains the entrypoints for a script
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoints
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoints
 */
 type Entrypoints struct {
 	Unreachable           []UnreachableEntrypoints `json:"unreachable,omitempty"`
@@ -951,7 +952,7 @@ type Entrypoints struct {
 UnreachableEntrypoints is the unreachable entrypoints in theEntrypoints function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoints
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoints
 */
 type UnreachableEntrypoints struct {
 	Path []*json.RawMessage `json:"path"`
@@ -964,7 +965,7 @@ Path:
 	../<block_id>/helpers/scripts/entrypoints (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-entrypoints
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-entrypoints
 */
 func (c *Client) Entrypoints(input EntrypointsInput) (*resty.Response, Entrypoints, error) {
 	err := validator.New().Struct(input)
@@ -990,7 +991,7 @@ func (c *Client) Entrypoints(input EntrypointsInput) (*resty.Response, Entrypoin
 PackDataInput is the input for the PackData function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-pack-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-pack-data
 */
 type PackDataInput struct {
 	// The block (height) of which you want to make the query.
@@ -1003,7 +1004,7 @@ type PackDataInput struct {
 PackDataBody is the data to pack for the PackData function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-pack-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-pack-data
 */
 type PackDataBody struct {
 	Data *json.RawMessage `json:"data"`
@@ -1015,7 +1016,7 @@ type PackDataBody struct {
 PackedData is the packed data for the PackData function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-pack-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-pack-data
 */
 type PackedData struct {
 	Packed string `json:"packed"`
@@ -1029,7 +1030,7 @@ Path:
 	../<block_id>/helpers/scripts/pack_data (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-pack-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-pack-data
 */
 func (c *Client) PackData(input PackDataInput) (*resty.Response, PackedData, error) {
 	err := validator.New().Struct(input)
@@ -1055,7 +1056,7 @@ func (c *Client) PackData(input PackDataInput) (*resty.Response, PackedData, err
 RunCodeInput is the input for the RunCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-code
 */
 type RunCodeInput struct {
 	// The block (height) of which you want to make the query.
@@ -1068,7 +1069,7 @@ type RunCodeInput struct {
 RunCodeBody is the body of the RunCode RPC
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-code
 */
 type RunCodeBody struct {
 	Script     *json.RawMessage `json:"script"`
@@ -1087,7 +1088,7 @@ type RunCodeBody struct {
 RanCode is the response to running code with the RunCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-code
 */
 type RanCode struct {
 	Storage     *json.RawMessage `json:"storage"`
@@ -1102,7 +1103,7 @@ Path:
 	../<block_id>/helpers/scripts/run_code (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-code
 */
 func (c *Client) RunCode(input RunCodeInput) (*resty.Response, RanCode, error) {
 	err := validator.New().Struct(input)
@@ -1128,7 +1129,7 @@ func (c *Client) RunCode(input RunCodeInput) (*resty.Response, RanCode, error) {
 RunOperationInput is the input for the RunOperation function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-operation
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-operation
 */
 type RunOperationInput struct {
 	// The block (height) of which you want to make the query.
@@ -1141,7 +1142,7 @@ type RunOperationInput struct {
 RunOperation is the operation to run in the RunOperation function.
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-operation
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-operation
 */
 type RunOperation struct {
 	Operation Operations `json:"operation" validate:"required"`
@@ -1155,7 +1156,7 @@ Path:
 	../<block_id>/helpers/scripts/run_operation (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-run-operation
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-run-operation
 */
 func (c *Client) RunOperation(input RunOperationInput) (*resty.Response, Operations, error) {
 	err := validator.New().Struct(input)
@@ -1181,7 +1182,7 @@ func (c *Client) RunOperation(input RunOperationInput) (*resty.Response, Operati
 TraceCodeInput is the input for TraceCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-trace-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-trace-code
 */
 type TraceCodeInput struct {
 	// The block (height) of which you want to make the query.
@@ -1194,7 +1195,7 @@ type TraceCodeInput struct {
 TracedCode is traced code returned from the TraceCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-trace-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-trace-code
 */
 type TracedCode struct {
 	RanCode
@@ -1205,7 +1206,7 @@ type TracedCode struct {
 Trace is a trace in traced code returned from the TraceCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-trace-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-trace-code
 */
 type Trace struct {
 	Location int     `json:"location"`
@@ -1217,7 +1218,7 @@ type Trace struct {
 Stack is a stack in a trace in traced code returned from the TraceCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-trace-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-trace-code
 */
 type Stack struct {
 	Item  *json.RawMessage `json:"item"`
@@ -1231,7 +1232,7 @@ Path:
 	../<block_id>/helpers/scripts/trace_code (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-trace-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-trace-code
 */
 func (c *Client) TraceCode(input TraceCodeInput) (*resty.Response, TracedCode, error) {
 	err := validator.New().Struct(input)
@@ -1257,7 +1258,7 @@ func (c *Client) TraceCode(input TraceCodeInput) (*resty.Response, TracedCode, e
 TypeCheckcodeInput is the input for the TypecheckCode functions
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-code
 */
 type TypeCheckcodeInput struct {
 	// The block (height) of which you want to make the query.
@@ -1270,7 +1271,7 @@ type TypeCheckcodeInput struct {
 TypecheckCodeBody is body for the input for the TypecheckCode functions
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-code
 */
 type TypecheckCodeBody struct {
 	Program *json.RawMessage `json:"program"`
@@ -1282,7 +1283,7 @@ type TypecheckCodeBody struct {
 TypecheckedCode is typechecked code returned by the TypecheckCode function
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-code
 */
 type TypecheckedCode struct {
 	TypeMap []struct {
@@ -1300,7 +1301,7 @@ Path:
 	../<block_id>/helpers/scripts/typecheck_code (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-code
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-code
 */
 func (c *Client) TypecheckCode(input TypeCheckcodeInput) (*resty.Response, TypecheckedCode, error) {
 	err := validator.New().Struct(input)
@@ -1326,7 +1327,7 @@ func (c *Client) TypecheckCode(input TypeCheckcodeInput) (*resty.Response, Typec
 TypecheckDataInput is the input for the TypecheckData functions
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-data
 */
 type TypecheckDataInput struct {
 	// The block (height) of which you want to make the query.
@@ -1339,7 +1340,7 @@ type TypecheckDataInput struct {
 TypecheckDataBody is body for the input for the TypecheckData functions
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-data
 */
 type TypecheckDataBody struct {
 	Data   *json.RawMessage `json:"data"`
@@ -1352,7 +1353,7 @@ type TypecheckDataBody struct {
 TypecheckedData is body for the input for the TypecheckData functions
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-data
 */
 type TypecheckedData struct {
 	Gas string `json:"gas"`
@@ -1365,7 +1366,7 @@ Path:
 	../<block_id>/helpers/scripts/typecheck_data (POST)
 
 RPC:
-	https://tezos.gitlab.io/008/rpc.html#post-block-id-helpers-scripts-typecheck-data
+	https://tezos.gitlab.io/010/rpc.html#post-block-id-helpers-scripts-typecheck-data
 */
 func (c *Client) TypecheckData(input TypecheckDataInput) (*resty.Response, TypecheckedData, error) {
 	err := validator.New().Struct(input)
