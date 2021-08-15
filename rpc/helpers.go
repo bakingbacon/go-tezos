@@ -468,6 +468,7 @@ type ForgeBlockHeaderBody struct {
 	Fitness        []string  `json:"fitness"`
 	Context        string    `json:"context"`
 	ProtocolData   string    `json:"protocol_data"`
+	Signature      string    `json:"signature,omitempty"`
 }
 
 /*

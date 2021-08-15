@@ -27,7 +27,7 @@ var (
 	genericSigPrefix       []byte = []byte{4, 130, 43}
 	edSigPrefix            []byte = []byte{9, 245, 205, 134, 18}
 	operationPrefix        []byte = []byte{29, 159, 109}
-	contextPrefix          []byte = []byte{79, 179}
+	contextPrefix          []byte = []byte{79, 199}
 	scriptExpressionPrefix []byte = []byte{13, 44, 64, 27}
 )
 
@@ -884,6 +884,77 @@ func forgeBlockHeader(b rpc.BlockHeader) ([]byte, error) {
 	}
 
 	return forgeArray(result.Bytes(), 4), nil
+}
+
+func ForgeBlockShell(b rpc.ForgeBlockHeaderBody) ([]byte, error) {
+
+	result := bytes.NewBuffer([]byte{})
+	result.Write(forgeInt32(b.Level, 4))
+
+	// Convert int Proto to byte, then to byte slice
+	protoByte := byte(b.Proto)
+	result.Write([]byte{protoByte})
+
+	predecessor, err := crypto.Decode(b.Predecessor)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge predecessor")
+	}
+	predecessorNoPrefix := bytes.TrimPrefix(predecessor, branchPrefix)
+	result.Write(predecessorNoPrefix)
+
+	// timestamp is 4 bytes, but must be front-padded to 8
+	tsBytes := forgeInt32(int(b.Timestamp.Unix()), 4)
+	paddedTs := make([]byte, 8)
+	copy(paddedTs[len(tsBytes):], tsBytes)
+	result.Write(paddedTs)
+
+	// Same as Proto
+	validByte := byte(b.ValidationPass)
+	result.Write([]byte{validByte})
+
+	operationsHash, err := crypto.Decode(b.OperationsHash)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge operations_hash")
+	}
+	operationsHashNoPrefix := bytes.TrimPrefix(operationsHash, operationPrefix)
+	result.Write(operationsHashNoPrefix)
+
+	buf := bytes.NewBuffer([]byte{})
+	for _, f := range b.Fitness {
+		if fitness, err := hex.DecodeString(f); err == nil {
+			buf.Write(forgeArray(fitness, 4))
+		} else {
+			return []byte{}, errors.Wrap(err, "failed to forge fitness")
+		}
+	}
+	result.Write(forgeArray(buf.Bytes(), 4))
+
+	contextHash, err := crypto.Decode(b.Context)
+	if err != nil {
+		return []byte{}, errors.Wrap(err, "failed to forge context")
+	}
+	contextHashNoPrefix := bytes.TrimPrefix(contextHash, contextPrefix)
+	result.Write(contextHashNoPrefix)
+
+	// protocolData contains:
+	//  - priority 2b
+	//  - proof of work nonce 8b
+	//  - presence of seed_nonce_hash 1b
+	//  - seed nonce hash 32b
+	//  - liquidy escape 1b
+	if protocolData, err := hex.DecodeString(b.ProtocolData); err == nil {
+		result.Write(protocolData)
+	} else {
+		return []byte{}, errors.Wrap(err, "failed to forge protocol data")
+	}
+
+// 	if signature, err := forgeSignature(b.Signature); err == nil {
+// 		result.Write(signature)
+// 	} else {
+// 		return []byte{}, errors.Wrap(err, "failed to forge signature")
+// 	}
+
+	return result.Bytes(), nil
 }
 
 func forgeSignature(value string) ([]byte, error) {
