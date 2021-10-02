@@ -1592,14 +1592,14 @@ func (c *Client) Cycle(cycle int) (*resty.Response, Cycle, error) {
 			return resp, Cycle{}, errors.Wrapf(err, "failed to get cycle '%d'", cycle)
 		}
 
-		resp, cyc, err = c.getCycleAtHash(block.Hash, cycle)
+		resp, cyc, err = c.GetCycleAtHash(block.Hash, cycle)
 		if err != nil {
 			return resp, Cycle{}, errors.Wrapf(err, "failed to get cycle '%d'", cycle)
 		}
 
 	} else {
 		var err error
-		resp, cyc, err = c.getCycleAtHash(head.Hash, cycle)
+		resp, cyc, err = c.GetCycleAtHash(head.Hash, cycle)
 		if err != nil {
 			return resp, Cycle{}, errors.Wrapf(err, "failed to get cycle '%d'", cycle)
 		}
@@ -1620,7 +1620,7 @@ func (c *Client) Cycle(cycle int) (*resty.Response, Cycle, error) {
 	return resp, cyc, nil
 }
 
-func (c *Client) getCycleAtHash(blockhash string, cycle int) (*resty.Response, Cycle, error) {
+func (c *Client) GetCycleAtHash(blockhash string, cycle int) (*resty.Response, Cycle, error) {
 	resp, err := c.get(fmt.Sprintf("/chains/%s/blocks/%s/context/raw/json/cycle/%d", c.chain, blockhash, cycle))
 	if err != nil {
 		return resp, Cycle{}, errors.Wrapf(err, "failed to get cycle at hash '%s'", blockhash)
